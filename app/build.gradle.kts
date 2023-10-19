@@ -1,5 +1,12 @@
 plugins {
     id("com.android.application")
+    id("com.apollographql.apollo3").version("3.7.3")
+}
+
+apollo {
+    service("service") {
+        packageName.set("com.isep.dailyartapp")
+    }
 }
 
 android {
@@ -35,7 +42,7 @@ android {
 }
 
 dependencies {
-
+    implementation("com.apollographql.apollo3:apollo-runtime:3.8.2")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")

@@ -48,13 +48,14 @@ public class ResearchFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.d("SEARCH", query);
+                Log.d("SARAH", query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Log.d("SEARCH", newText);
+                Log.d("SARAH", newText);
+                search(newText);
                 return false;
             }
         });
@@ -80,9 +81,7 @@ public class ResearchFragment extends Fragment {
     }
 
     private void displayMuseumsDialog(TextView selectMuseumTextView) {
-        Log.d("SARAH", "Museums dialog");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         builder.setTitle("Sélectionnez des musées :");
         builder.setCancelable(false);
         builder.setMultiChoiceItems(museumsNameArray, selectedMuseums, new DialogInterface.OnMultiChoiceClickListener() {
@@ -159,6 +158,10 @@ public class ResearchFragment extends Fragment {
             }
         });
         builder.show();
+    }
+
+    public void search(String title) {
+
     }
 
     @Override
