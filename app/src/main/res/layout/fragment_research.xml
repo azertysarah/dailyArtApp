@@ -35,7 +35,7 @@
 
         <LinearLayout
             android:layout_width="387dp"
-            android:layout_height="27dp"
+            android:layout_height="35dp"
             android:orientation="horizontal"
             android:weightSum="50"
             app:layout_constraintBottom_toTopOf="@+id/text_research"
@@ -44,6 +44,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <RelativeLayout
+                android:id="@+id/museumsSelection"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="25"
@@ -54,14 +55,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="8dp"
                     android:hint="@string/museums" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
                     android:src="@drawable/ic_arrow_down" />
             </RelativeLayout>
 
@@ -71,24 +74,27 @@
                 android:layout_weight="0" />
 
             <RelativeLayout
+                android:id="@+id/movementsSelection"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="25"
                 android:background="@drawable/select_background">
 
                 <TextView
-                    android:id="@+id/selectCategoryTextView"
+                    android:id="@+id/selectMovementTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="8dp"
                     android:hint="@string/movements" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
                     android:src="@drawable/ic_arrow_down" />
             </RelativeLayout>
         </LinearLayout>
