@@ -48,13 +48,12 @@ public class ResearchFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.d("SEARCH", query);
+                search(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Log.d("SEARCH", newText);
                 return false;
             }
         });
@@ -159,6 +158,12 @@ public class ResearchFragment extends Fragment {
             }
         });
         builder.show();
+    }
+
+    private void search(String text) {
+        Log.d("SARAH", text);
+
+        // HttpClient client = HttpClient.newHttpClient();
     }
 
     @Override
