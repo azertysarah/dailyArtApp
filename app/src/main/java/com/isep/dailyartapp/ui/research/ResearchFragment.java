@@ -15,17 +15,12 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.apollographql.apollo.ApolloCall;
-import com.apollographql.apollo.ApolloClient;
-import com.apollographql.apollo.exception.ApolloException;
-import com.isep.dailyartapp.data.Apollo;
+import com.isep.dailyartapp.data.ApolloMuseumClient;
 import com.isep.dailyartapp.databinding.FragmentResearchBinding;
+import com.isep.dailyartapp.domain.Museum;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Response;
+import java.util.List;
 
 public class ResearchFragment extends Fragment {
 
@@ -167,6 +162,8 @@ public class ResearchFragment extends Fragment {
 
     public void search(String title) {
         Log.d("SARAH", "Search function launched");
+        ApolloMuseumClient apolloMuseumClient = new ApolloMuseumClient();
+        // List<Museum> museums = apolloMuseumClient.getMuseums();
         // Apollo.getMuseums(title);
     }
 
