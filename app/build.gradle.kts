@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
-    id("com.apollographql.apollo3").version("3.7.3")
+    id("com.apollographql.apollo3").version("3.8.2")
+    //id("com.apollographql.apollo").version("2.4.6")
 }
 
 apollo {
@@ -24,7 +25,13 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "API_URL", "\"https://apicollections.parismusees.paris.fr/graphql\"")
+            buildConfigField("String", "AUTH_TOKEN", "\"cb3df41b-aefc-4e3a-9c39-fa315babc975\"")
+        }
         release {
+            buildConfigField("String", "API_URL", "\"https://apicollections.parismusees.paris.fr/graphql\"")
+            buildConfigField("String", "AUTH_TOKEN", "\"cb3df41b-aefc-4e3a-9c39-fa315babc975\"")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -38,10 +45,13 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
 dependencies {
+    //implementation("com.apollographql.apollo:apollo-runtime:2.4.6")
+    //implementation("com.apollographql.apollo:apollo-coroutines-support:2.4.6")
     implementation("com.apollographql.apollo3:apollo-runtime:3.8.2")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")

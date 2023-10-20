@@ -15,10 +15,17 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.apollographql.apollo.ApolloCall;
+import com.apollographql.apollo.ApolloClient;
+import com.apollographql.apollo.exception.ApolloException;
+import com.isep.dailyartapp.data.Apollo;
 import com.isep.dailyartapp.databinding.FragmentResearchBinding;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Response;
 
 public class ResearchFragment extends Fragment {
 
@@ -48,14 +55,12 @@ public class ResearchFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.d("SARAH", query);
+                search(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Log.d("SARAH", newText);
-                search(newText);
                 return false;
             }
         });
@@ -161,7 +166,8 @@ public class ResearchFragment extends Fragment {
     }
 
     public void search(String title) {
-
+        Log.d("SARAH", "Search function launched");
+        // Apollo.getMuseums(title);
     }
 
     @Override
