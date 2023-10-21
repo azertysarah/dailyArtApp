@@ -1,0 +1,12 @@
+query Search($search: String!){
+    nodeQuery(filter: {conditions:
+    {field: "title", value: [$search], operator: LIKE}}
+        limit: 20
+    ) {
+        count
+        entities {
+            entityUuid
+            entityLabel
+        }
+    }
+}

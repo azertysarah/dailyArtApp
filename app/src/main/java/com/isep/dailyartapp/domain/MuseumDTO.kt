@@ -1,6 +1,7 @@
 package com.isep.dailyartapp.domain
 
-data class Museum(
+// DTOs
+data class MuseumDTO(
     val uuid: String?,
     val name: String?
 )

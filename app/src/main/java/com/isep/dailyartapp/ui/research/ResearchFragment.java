@@ -15,9 +15,11 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.isep.dailyartapp.data.ApolloMuseumClient;
+import com.apollographql.apollo3.api.Optional;
+import com.isep.dailyartapp.data.ApolloArtClient;
 import com.isep.dailyartapp.databinding.FragmentResearchBinding;
-import com.isep.dailyartapp.domain.Museum;
+import com.isep.dailyartapp.domain.ArtworkDTO;
+import com.isep.dailyartapp.domain.MuseumDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +53,7 @@ public class ResearchFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                search(query);
+                searchOnTitle(query);
                 return false;
             }
 
@@ -71,12 +73,12 @@ public class ResearchFragment extends Fragment {
         });
 
         // Get the museums array
-        ApolloMuseumClient apolloMuseumClient = new ApolloMuseumClient();
-        CompletableFuture<List<Museum>> result = apolloMuseumClient.doSomethingAsync();
+        ApolloArtClient apolloArtClient = new ApolloArtClient();
+        CompletableFuture<List<MuseumDTO>> result = apolloArtClient.getMuseumsAsync();
         try {
-            List<Museum> museums = result.join();
-            for(int i=0; i<museums.size(); i++) {
-                museumsNameArray[i] = museums.get(i).getName();
+            List<MuseumDTO> museumDTOS = result.join();
+            for(int i = 0; i< museumDTOS.size(); i++) {
+                museumsNameArray[i] = museumDTOS.get(i).getName();
             }
         } catch (Exception e) {
             Log.e("DAILY_ART", "Error: ", e);
@@ -173,17 +175,15 @@ public class ResearchFragment extends Fragment {
         builder.show();
     }
 
-    public void search(String title) {
-        ApolloMuseumClient apolloMuseumClient = new ApolloMuseumClient();
-        CompletableFuture<List<Museum>> result = apolloMuseumClient.doSomethingAsync();
+    public void searchOnTitle(String title) {
+        ApolloArtClient apolloArtClient = new ApolloArtClient();
+        CompletableFuture<List<ArtworkDTO>> result = apolloArtClient.searchArtworkAsync(title);
         try {
-            List<Museum> museums = result.join(); // Wait for the future to complete and get the result
-            Log.d("SARAH", museums.toString());
-
-            Log.d("SARAH", museums.get(0).getName().toString());
+            List<ArtworkDTO> artworks = result.join();
+            Log.d("SARAH", artworks.toString());
         } catch (Exception e) {
             // Handle exceptions, e.g., if the future completed exceptionally
-            Log.e("SARAH", "Error", e);
+            Log.e("DAILY_ART", "Error", e);
         }
     }
 
