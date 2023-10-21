@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
     id("com.apollographql.apollo3").version("3.8.2")
     //id("com.apollographql.apollo").version("2.4.6")
+    id("kotlin-android")
+    id("kotlin-parcelize")
 }
 
 apollo {
@@ -40,8 +42,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures {
         viewBinding = true
@@ -50,8 +52,9 @@ android {
 }
 
 dependencies {
-    //implementation("com.apollographql.apollo:apollo-runtime:2.4.6")
-    //implementation("com.apollographql.apollo:apollo-coroutines-support:2.4.6")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("com.apollographql.apollo3:apollo-runtime:3.8.2")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")

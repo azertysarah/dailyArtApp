@@ -21,13 +21,14 @@ import com.isep.dailyartapp.domain.Museum;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class ResearchFragment extends Fragment {
 
     private FragmentResearchBinding binding;
 
     // For research museum filter
-    String [] museumsNameArray = {"Louvres", "Maison de Blazac", "Musée d'Orsay", "Musée du Quai Branly"};
+    String [] museumsNameArray = new String[14];
     boolean [] selectedMuseums;
     ArrayList<Integer> museumsIndexList = new ArrayList<>();
 
@@ -68,6 +69,18 @@ public class ResearchFragment extends Fragment {
         museumsSelection.setOnClickListener(view -> {
             displayMuseumsDialog(selectMuseumTextView);
         });
+
+        // Get the museums array
+        ApolloMuseumClient apolloMuseumClient = new ApolloMuseumClient();
+        CompletableFuture<List<Museum>> result = apolloMuseumClient.doSomethingAsync();
+        try {
+            List<Museum> museums = result.join();
+            for(int i=0; i<museums.size(); i++) {
+                museumsNameArray[i] = museums.get(i).getName();
+            }
+        } catch (Exception e) {
+            Log.e("DAILY_ART", "Error: ", e);
+        }
 
         // SELECTION : MOVEMENTS
         RelativeLayout movementsSelection = binding.movementsSelection;
@@ -161,10 +174,17 @@ public class ResearchFragment extends Fragment {
     }
 
     public void search(String title) {
-        Log.d("SARAH", "Search function launched");
         ApolloMuseumClient apolloMuseumClient = new ApolloMuseumClient();
-        // List<Museum> museums = apolloMuseumClient.getMuseums();
-        // Apollo.getMuseums(title);
+        CompletableFuture<List<Museum>> result = apolloMuseumClient.doSomethingAsync();
+        try {
+            List<Museum> museums = result.join(); // Wait for the future to complete and get the result
+            Log.d("SARAH", museums.toString());
+
+            Log.d("SARAH", museums.get(0).getName().toString());
+        } catch (Exception e) {
+            // Handle exceptions, e.g., if the future completed exceptionally
+            Log.e("SARAH", "Error", e);
+        }
     }
 
     @Override
