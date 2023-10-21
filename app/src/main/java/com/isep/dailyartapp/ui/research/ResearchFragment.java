@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -39,14 +41,12 @@ public class ResearchFragment extends Fragment {
     boolean [] selectedMovements;
     ArrayList<Integer> movementsIndexList = new ArrayList<>();
 
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ResearchViewModel researchViewModel = new ViewModelProvider(this).get(ResearchViewModel.class);
 
         binding = FragmentResearchBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-        final TextView textView = binding.textResearch;
-        researchViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         // RESEARCH
         SearchView searchView = binding.searchView;
@@ -91,7 +91,6 @@ public class ResearchFragment extends Fragment {
         movementsSelection.setOnClickListener(view -> {
             displayMovementsDialog(selectMovementTextView);
         });
-
         return root;
     }
 
@@ -174,13 +173,24 @@ public class ResearchFragment extends Fragment {
         });
         builder.show();
     }
+    private void displayArtworkInView(List<ArtworkDTO> artworks) {
+        ListView researchListView = binding.researchListView;
+        String[] artworkStringList = new String[artworks.size()];
+        for(int i=0; i<artworkStringList.length; i++) {
+            artworkStringList[i] = artworks.get(i).getName();
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, artworkStringList);
+
+        researchListView.setAdapter(adapter);
+    }
 
     public void searchOnTitle(String title) {
         ApolloArtClient apolloArtClient = new ApolloArtClient();
         CompletableFuture<List<ArtworkDTO>> result = apolloArtClient.searchArtworkAsync(title);
         try {
             List<ArtworkDTO> artworks = result.join();
-            Log.d("SARAH", artworks.toString());
+            displayArtworkInView(artworks);
         } catch (Exception e) {
             // Handle exceptions, e.g., if the future completed exceptionally
             Log.e("DAILY_ART", "Error", e);

@@ -10,7 +10,7 @@
         android:layout_width="387dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/text_research"
+        app:layout_constraintBottom_toTopOf="@+id/researchListView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -100,8 +100,8 @@
         </LinearLayout>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/text_research"
+    <ListView
+        android:id="@+id/researchListView"
         android:layout_width="365dp"
         android:layout_height="541dp"
         android:layout_marginStart="8dp"
