@@ -179,9 +179,7 @@ public class ResearchFragment extends Fragment {
         for(int i=0; i<artworkStringList.length; i++) {
             artworkStringList[i] = artworks.get(i).getName();
         }
-
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, artworkStringList);
-
         researchListView.setAdapter(adapter);
     }
 
