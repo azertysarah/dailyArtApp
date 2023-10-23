@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -16,12 +17,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.isep.dailyartapp.R;
 import com.isep.dailyartapp.data.ApolloArtClient;
 import com.isep.dailyartapp.databinding.FragmentResearchBinding;
 import com.isep.dailyartapp.domain.ArtworkDTO;
 import com.isep.dailyartapp.domain.MuseumDTO;
+import com.isep.dailyartapp.ui.ArtworkDetailsFragment;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -46,6 +50,10 @@ public class ResearchFragment extends Fragment {
     ArrayList<Integer> movementsIndexList = new ArrayList<>();
     List<String> requestedMovements = new ArrayList<>();
 
+    // Research parameters
+    private String titleParameter = " ";
+    private String museumParameter = " ";
+    private String timePeriodParameter = " ";
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ResearchViewModel researchViewModel = new ViewModelProvider(this).get(ResearchViewModel.class);
@@ -54,7 +62,7 @@ public class ResearchFragment extends Fragment {
         View root = binding.getRoot();
 
         // Default artworks display
-        searchArtworks(" ", " ", " ");
+        searchArtworks(titleParameter, museumParameter, timePeriodParameter);
 
         // SELECTION : MUSEUMS
         RelativeLayout museumsSelection = binding.museumsSelection;
@@ -90,7 +98,8 @@ public class ResearchFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                searchArtworks(query, "", "");
+                titleParameter = query;
+                searchArtworks(titleParameter, museumParameter, timePeriodParameter);
                 return false;
             }
 
@@ -128,6 +137,10 @@ public class ResearchFragment extends Fragment {
                 }
                 dialogInterface.dismiss();
                 selectMuseumTextView.setText(stringBuilder.toString());
+
+                // Launch research
+                museumParameter = stringBuilder.toString();
+                searchArtworks(titleParameter, museumParameter, timePeriodParameter);
             }
         }).setNeutralButton("Effacer", new DialogInterface.OnClickListener() {
             @Override
@@ -138,6 +151,10 @@ public class ResearchFragment extends Fragment {
                     selectMuseumTextView.setText("");
                 }
                 dialogInterface.dismiss();
+
+                // Launch research
+                museumParameter = " ";
+                searchArtworks(titleParameter, museumParameter, timePeriodParameter);
             }
         });
         builder.show();
@@ -168,6 +185,10 @@ public class ResearchFragment extends Fragment {
                 }
                 dialogInterface.dismiss();
                 selectMovementsTextView.setText(stringBuilder.toString());
+
+                // Launch research
+                timePeriodParameter = stringBuilder.toString();
+                searchArtworks(titleParameter, museumParameter, timePeriodParameter);
             }
         }).setNeutralButton("Effacer", new DialogInterface.OnClickListener() {
             @Override
@@ -178,18 +199,47 @@ public class ResearchFragment extends Fragment {
                     selectMovementsTextView.setText("");
                 }
                 dialogInterface.dismiss();
+
+                // Launch research
+                timePeriodParameter = " ";
+                searchArtworks(titleParameter, museumParameter, timePeriodParameter);
             }
         });
         builder.show();
     }
     private void displayArtworkInView(List<ArtworkDTO> artworks) {
         ListView researchListView = binding.researchListView;
+        // Display
         String[] artworkStringList = new String[artworks.size()];
         for(int i=0; i<artworkStringList.length; i++) {
             artworkStringList[i] = artworks.get(i).getName();
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, artworkStringList);
         researchListView.setAdapter(adapter);
+        researchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Fetch the clicked artwork data
+                ArtworkDTO artwork = artworks.get(position);
+                // Pass the data to the details fragment
+                ResearchResultFragment researchResultFragment = new ResearchResultFragment();
+                Bundle args = new Bundle();
+
+                args.putString("name", artwork.getName());
+                //args.putString("artist", artwork.getArtist());
+                //args.putString("picture", artwork.getPicture());
+                args.putString("timePeriod", artwork.getTimePeriod());
+                args.putString("museum", artwork.getMuseum());
+                //args.putString("description", artwork.getDescription));
+
+                researchResultFragment.setArguments(args);
+
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment_activity_main, researchResultFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
     }
 
     public void searchArtworks(String title, String museum, String timePeriod) {
