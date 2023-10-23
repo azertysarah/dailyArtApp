@@ -3,9 +3,11 @@ package com.isep.dailyartapp.data
 import com.isep.dailyartapp.ArtDetailsQuery
 import com.isep.dailyartapp.MuseumsQuery
 import com.isep.dailyartapp.SearchQuery
+import com.isep.dailyartapp.UuidListQuery
 import com.isep.dailyartapp.domain.ArtDetailsDTO
 import com.isep.dailyartapp.domain.ArtworkDTO
 import com.isep.dailyartapp.domain.MuseumDTO
+import com.isep.dailyartapp.domain.UuidListDTO
 
 fun MuseumsQuery.Entity.toMuseumDTO() : MuseumDTO {
     return MuseumDTO(
@@ -20,6 +22,12 @@ fun SearchQuery.Entity.toArtworkDTO() : ArtworkDTO {
         name = entityLabel
     )
 }
+
+/*fun UuidListQuery.Entity.toUuidListDTO() : UuidListDTO {
+    return UuidListDTO(
+        uuid = entityUuid
+    )
+}*/
 
 fun ArtDetailsQuery.Entity.toArtDetailsDTO() : ArtDetailsDTO {
     return ArtDetailsDTO(

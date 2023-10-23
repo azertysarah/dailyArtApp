@@ -17,15 +17,16 @@
 
     <TextView
         android:id="@+id/titleTextView"
-        android:layout_width="64dp"
-        android:layout_height="15dp"
+        android:layout_width="109dp"
+        android:layout_height="36dp"
         android:layout_marginStart="-64dp"
         android:layout_marginTop="34dp"
         android:paddingStart="0dp"
         android:paddingEnd="64dp"
         android:text="Titre de l'œuvre"
-        android:textColor="#000000"
-        android:textSize="11sp" />
+        android:textAlignment="center"
+        android:textSize="5dp"
+        android:textStyle="bold" />
 
     <!-- Ajoutez d'autres éléments de l'œuvre d'art ici, tels que l'artiste, la date, etc. -->
 

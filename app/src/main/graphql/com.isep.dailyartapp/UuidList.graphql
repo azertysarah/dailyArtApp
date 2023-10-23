@@ -1,0 +1,13 @@
+query UuidList {
+    nodeQuery(filter: {
+        conditions: [
+            { field: "type", value: "oeuvre", operator: EQUAL },
+            { field: "title", operator: IS_NOT_NULL }
+        ]
+    }
+        limit: 500) {
+        entities {
+            entityUuid
+        }
+    }
+}
