@@ -1,6 +1,6 @@
-query ArtDetails($search: String!){
+query ArtDetails($id: String!){
     nodeQuery(filter: {conditions:
-        {field: "uuid", value: [$search]}}
+        {field: "uuid", value: [$id]}}
       ) {
         entities {
           entityUuid

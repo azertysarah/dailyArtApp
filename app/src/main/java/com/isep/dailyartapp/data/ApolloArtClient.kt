@@ -51,7 +51,7 @@ class ApolloArtClient: ArtClient {
     override suspend fun searchArtwork(queryTitle: String): List<ArtworkDTO> {
         val apolloClient = buildClient()
         val validQueryTitle = "%$queryTitle%"
-        //651c7e41-f63e-4d27-b5e8-497aaa93272f
+
         return apolloClient
             .query(SearchQuery(validQueryTitle))
             .execute()
@@ -65,7 +65,7 @@ class ApolloArtClient: ArtClient {
     }
     override suspend fun artDetails(queryID: String): List<ArtDetailsDTO> {
         val apolloClient = buildClient()
-        val validQueryID = "%$queryID"
+        val validQueryID = "651c7e41-f63e-4d27-b5e8-497aaa93272f"
         return apolloClient
             .query(ArtDetailsQuery(validQueryID))
             .execute()
