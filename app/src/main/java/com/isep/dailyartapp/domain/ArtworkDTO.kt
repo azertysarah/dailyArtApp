@@ -5,6 +5,7 @@ data class ArtworkDTO(
     val name: String?,
     // val picture: String?,
     // val artistName: String?,
+    // val description: String?,
     val museum: String?,
     val timePeriod: String?
 )

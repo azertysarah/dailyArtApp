@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">dailyArtApp</string>
+    <string name="app_name">DailyArtApp</string>
     <string name="title_home">DailyArt</string>
     <string name="title_research">Recherche</string>
     <string name="title_favorites">Favoris</string>
