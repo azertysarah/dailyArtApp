@@ -1,13 +1,14 @@
 package com.isep.dailyartapp.data
 
 import com.apollographql.apollo3.ApolloClient
-import com.apollographql.apollo3.api.Optional
 import com.apollographql.apollo3.network.okHttpClient
+import com.isep.dailyartapp.ArtDetailsQuery
 import com.isep.dailyartapp.BuildConfig
 import com.isep.dailyartapp.MuseumsQuery
 import com.isep.dailyartapp.SearchQuery
 import com.isep.dailyartapp.domain.MuseumDTO
 import com.isep.dailyartapp.domain.ArtClient
+import com.isep.dailyartapp.domain.ArtDetailsDTO
 import com.isep.dailyartapp.domain.ArtworkDTO
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.future.future
@@ -50,12 +51,27 @@ class ApolloArtClient: ArtClient {
     override suspend fun searchArtwork(queryTitle: String): List<ArtworkDTO> {
         val apolloClient = buildClient()
         val validQueryTitle = "%$queryTitle%"
+        //651c7e41-f63e-4d27-b5e8-497aaa93272f
         return apolloClient
             .query(SearchQuery(validQueryTitle))
             .execute()
             .data
             ?.nodeQuery?.entities
             ?.map { it!!.toArtworkDTO() } !!
+    }
+
+    fun artDetailsAsync(queryID: String) : CompletableFuture<List<ArtDetailsDTO>> = GlobalScope.future {
+        artDetails(queryID)
+    }
+    override suspend fun artDetails(queryID: String): List<ArtDetailsDTO> {
+        val apolloClient = buildClient()
+        val validQueryID = "%$queryID"
+        return apolloClient
+            .query(ArtDetailsQuery(validQueryID))
+            .execute()
+            .data
+            ?.nodeQuery?.entities
+            ?.map { it!!.toArtDetailsDTO() } !!
     }
 }
 

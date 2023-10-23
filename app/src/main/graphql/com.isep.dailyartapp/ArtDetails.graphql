@@ -1,0 +1,43 @@
+query ArtDetails($search: String!){
+    nodeQuery(filter: {conditions:
+        {field: "uuid", value: [$search]}}
+      ) {
+        entities {
+          entityUuid
+          ... on NodeOeuvre {
+            title
+            fieldOeuvreAuteurs {
+              entity {
+                fieldAuteurAuteur {
+                  entity {
+                    name
+                  }
+                }
+              }
+            }
+            fieldVisuels {
+              entity {
+                publicUrl
+              }
+            }
+            fieldDateProduction {
+              century
+              processed
+            }
+            fieldOeuvreDescriptionIcono {
+              value
+            }
+            fieldMusee {
+              entity {
+                name
+              }
+            }
+            fieldOeuvreExpose {
+              entity {
+                name
+              }
+            }
+          }
+        }
+      }
+}

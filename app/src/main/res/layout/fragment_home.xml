@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:text="Date du jour - "
+        android:text="Oeuvre du jour - "
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -69,7 +69,7 @@
         app:layout_constraintTop_toBottomOf="@id/textView5" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/dateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="JJ/MM/AAAA"
