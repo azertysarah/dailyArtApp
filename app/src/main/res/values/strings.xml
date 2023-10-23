@@ -8,4 +8,9 @@
     <string name="movements">Mouvements</string>
     <string name="museumsDialogTitle">Sélectionner les musées : </string>
     <string name="backToResearch">Retourner à la recherche</string>
+    <string name="museum">Musée : </string>
+    <string name="timePeriod">Epoque : </string>
+    <string name="artist">Artiste : </string>
+    <string name="description">Description : </string>
+    <string name="add_to_favorites">Ajouter aux favoris</string>
 </resources>

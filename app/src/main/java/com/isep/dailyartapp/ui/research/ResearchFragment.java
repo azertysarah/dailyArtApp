@@ -54,7 +54,7 @@ public class ResearchFragment extends Fragment {
         View root = binding.getRoot();
 
         // Default artworks display
-        searchArtworks("", requestedMuseums, requestedMovements);
+        searchArtworks(" ", " ", " ");
 
         // SELECTION : MUSEUMS
         RelativeLayout museumsSelection = binding.museumsSelection;
@@ -90,7 +90,7 @@ public class ResearchFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //searchArtworks(query);
+                searchArtworks(query, "", "");
                 return false;
             }
 
@@ -192,9 +192,9 @@ public class ResearchFragment extends Fragment {
         researchListView.setAdapter(adapter);
     }
 
-    public void searchArtworks(String title, List<String> museums, List<String> timePeriods) {
+    public void searchArtworks(String title, String museum, String timePeriod) {
         ApolloArtClient apolloArtClient = new ApolloArtClient();
-        CompletableFuture<List<ArtworkDTO>> result = apolloArtClient.searchArtworkAsync(title, museums, timePeriods);
+        CompletableFuture<List<ArtworkDTO>> result = apolloArtClient.searchArtworkAsync(title, museum, timePeriod);
         try {
             List<ArtworkDTO> artworks = result.join();
             displayArtworkInView(artworks);

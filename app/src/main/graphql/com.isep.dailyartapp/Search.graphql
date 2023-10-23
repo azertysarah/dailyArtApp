@@ -1,9 +1,9 @@
-query Search($searchOnTitle: String!, $searchOnMuseums: [String!]!, $searchOnTimePeriods: [String!]!){
+query Search($searchOnTitle: String!, $searchOnMuseum: String!, $searchOnTimePeriod: String!){
     nodeQuery(filter:
     {conditions: [
         {field: "title", value: [$searchOnTitle], operator: LIKE},
-        {field: "field_musee.entity.name", value: [$searchOnMuseums], operator: LIKE},
-        {field: "field_oeuvre_siecle.entity.name", value: [$searchOnTimePeriods], operator: LIKE},
+        {field: "field_musee.entity.name", value: [$searchOnMuseum], operator: LIKE},
+        {field: "field_oeuvre_siecle.entity.name", value: [$searchOnTimePeriod], operator: LIKE},
         {field: "field_visuels", operator: IS_NOT_NULL},
         {field: "field_oeuvre_description_icono", operator: IS_NOT_NULL}
     ]}
