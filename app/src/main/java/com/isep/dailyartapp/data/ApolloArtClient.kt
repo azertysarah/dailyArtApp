@@ -43,15 +43,16 @@ class ApolloArtClient: ArtClient {
     }
 
     // Get art work according to the user input in the search field (search on title)
-    fun searchArtworkAsync(queryTitle: String) : CompletableFuture<List<ArtworkDTO>> = GlobalScope.future{
-        searchArtwork(queryTitle)
+    fun searchArtworkAsync(queryTitle: String, queryMuseums: List<String>, queryTimePeriods: List<String>) : CompletableFuture<List<ArtworkDTO>> = GlobalScope.future{
+        searchArtwork(queryTitle, queryMuseums, queryTimePeriods)
     }
 
-    override suspend fun searchArtwork(queryTitle: String): List<ArtworkDTO> {
+    override suspend fun searchArtwork(queryTitle: String, queryMuseums: List<String>, queryTimePeriods: List<String>): List<ArtworkDTO> {
         val apolloClient = buildClient()
         val validQueryTitle = "%$queryTitle%"
+
         return apolloClient
-            .query(SearchQuery(validQueryTitle))
+            .query(SearchQuery(validQueryTitle, queryMuseums, queryTimePeriods))
             .execute()
             .data
             ?.nodeQuery?.entities

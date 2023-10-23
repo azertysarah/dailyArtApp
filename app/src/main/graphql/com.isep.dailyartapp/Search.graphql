@@ -1,12 +1,47 @@
-query Search($search: String!){
-    nodeQuery(filter: {conditions:
-    {field: "title", value: [$search], operator: LIKE}}
+query Search($searchOnTitle: String!, $searchOnMuseums: [String!]!, $searchOnTimePeriods: [String!]!){
+    nodeQuery(filter:
+    {conditions: [
+        {field: "title", value: [$searchOnTitle], operator: LIKE},
+        {field: "field_musee.entity.name", value: [$searchOnMuseums], operator: LIKE},
+        {field: "field_oeuvre_siecle.entity.name", value: [$searchOnTimePeriods], operator: LIKE},
+        {field: "field_visuels", operator: IS_NOT_NULL},
+        {field: "field_oeuvre_description_icono", operator: IS_NOT_NULL}
+    ]}
         limit: 20
     ) {
-        count
         entities {
             entityUuid
             entityLabel
+            ... on NodeOeuvre {
+                fieldVisuels {
+                    entity {
+                        publicUrl
+                    }
+                }
+                fieldOeuvreAuteurs {
+                    entity {
+                        fieldAuteurAuteur {
+                            entity {
+                                name
+                            }
+                        }
+                    }
+                }
+                fieldOeuvreSiecle {
+                    entity {
+                        name
+                    }
+                }
+                fieldOeuvreDescriptionIcono {
+                    value
+                }
+                fieldMusee {
+                    entity {
+                        name
+                    }
+                }
+            }
         }
     }
 }
+

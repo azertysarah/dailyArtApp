@@ -13,18 +13,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.apollographql.apollo3.api.Optional;
 import com.isep.dailyartapp.data.ApolloArtClient;
 import com.isep.dailyartapp.databinding.FragmentResearchBinding;
 import com.isep.dailyartapp.domain.ArtworkDTO;
 import com.isep.dailyartapp.domain.MuseumDTO;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.concurrent.CompletableFuture;
 
 public class ResearchFragment extends Fragment {
@@ -35,11 +38,13 @@ public class ResearchFragment extends Fragment {
     String [] museumsNameArray = new String[14];
     boolean [] selectedMuseums;
     ArrayList<Integer> museumsIndexList = new ArrayList<>();
+    List<String> requestedMuseums = new ArrayList<>();
 
     // For research movement filter
-    String [] movementsNameArray = {"Baroque", "Classicisme", "Romantisme", "Réalisme"};
+    String [] movementsNameArray = {"17e siècle", "18e siècle", "19e siècle", "20e siècle"};
     boolean [] selectedMovements;
     ArrayList<Integer> movementsIndexList = new ArrayList<>();
+    List<String> requestedMovements = new ArrayList<>();
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,20 +53,8 @@ public class ResearchFragment extends Fragment {
         binding = FragmentResearchBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        // RESEARCH
-        SearchView searchView = binding.searchView;
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                searchOnTitle(query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
+        // Default artworks display
+        searchArtworks("", requestedMuseums, requestedMovements);
 
         // SELECTION : MUSEUMS
         RelativeLayout museumsSelection = binding.museumsSelection;
@@ -91,6 +84,22 @@ public class ResearchFragment extends Fragment {
         movementsSelection.setOnClickListener(view -> {
             displayMovementsDialog(selectMovementTextView);
         });
+
+        // RESEARCH
+        SearchView searchView = binding.searchView;
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //searchArtworks(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
         return root;
     }
 
@@ -183,9 +192,9 @@ public class ResearchFragment extends Fragment {
         researchListView.setAdapter(adapter);
     }
 
-    public void searchOnTitle(String title) {
+    public void searchArtworks(String title, List<String> museums, List<String> timePeriods) {
         ApolloArtClient apolloArtClient = new ApolloArtClient();
-        CompletableFuture<List<ArtworkDTO>> result = apolloArtClient.searchArtworkAsync(title);
+        CompletableFuture<List<ArtworkDTO>> result = apolloArtClient.searchArtworkAsync(title, museums, timePeriods);
         try {
             List<ArtworkDTO> artworks = result.join();
             displayArtworkInView(artworks);

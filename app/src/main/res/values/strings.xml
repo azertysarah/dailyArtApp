@@ -7,4 +7,5 @@
     <string name="museums">Musées</string>
     <string name="movements">Mouvements</string>
     <string name="museumsDialogTitle">Sélectionner les musées : </string>
+    <string name="backToResearch">Retourner à la recherche</string>
 </resources>
